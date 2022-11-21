@@ -1,63 +1,7 @@
-socket.io-proxy
-===============
+# About
 
-A socket.io client for node.js that can connect through a proxy server.
+Patched version of https://github.com/stbrenner/socket.io-proxy. A few changes:
 
-[![Build Status](https://travis-ci.org/stbrenner/socket.io-proxy.png?branch=master)](https://travis-ci.org/stbrenner/socket.io-proxy)
-
-Installation
-------------
-
-```shell
-$ npm install socket.io-proxy
-```
-
-How to use
-----------
-
-### Based on environment variable
-
-socket.io-proxy will automatically apply the proxy settings based on the http\_proxy environment variable. 
-If no proxy is defined, a direct connection to the destination will be established.
-
-```ruby
-var proxy = require('socket.io-proxy');
-
-var socket = proxy.connect('http://destination');
-
-socket.on('connect', function () {
-    console.log('Socket connected');
-    socket.on('command', function (data) {
-        console.log('Received data');
-    });
-    socket.on('disconnect', function() {
-        console.log('Socket disconnected');
-    });
-});
-```
-
-On Linux you can specify the environment variable in the following way: `export http_proxy=http://proxy:8080`
-
-On Windows: `set HTTP_PROXY=http://proxy:8080`
-
-
-### Explicit proxy definition
-
-You can also directly specify the proxy server using the init function.
-
-```ruby
-var proxy = require('socket.io-proxy');
-
-proxy.init('http://proxy:8080');
-var socket = proxy.connect('http://destination');
-
-socket.on('connect', function () {
-    console.log('Socket connected');
-    socket.on('command', function (data) {
-        console.log('Received data');
-    });
-    socket.on('disconnect', function() {
-        console.log('Socket disconnected');
-    });
-});
-```
+- support for wss protocol (just replaces to https)
+- always use http connection (even for https endpoints)
+- added protocol with a hostname to request path (squid doesn't work if only Host header specified)
